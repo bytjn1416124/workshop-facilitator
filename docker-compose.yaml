@@ -3,4 +3,55 @@ version: '3.8'
 services:
   xrx-orchestrator:
     image: xrx-orchestrator
-[Rest of docker-compose.yaml content...]
+    build: 
+      context: ./xrx-core/orchestrator
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      - xrx-redis
+      - xrx-reasoning
+      - xrx-stt
+      - xrx-tts
+
+  xrx-reasoning:
+    build: .
+    ports:
+      - "8003:8003"
+    env_file: .env
+    volumes:
+      - ./app:/app
+    depends_on:
+      - xrx-redis
+
+  xrx-stt:
+    image: xrx-stt
+    build:
+      context: ./xrx-core/stt
+    ports:
+      - "8001:8001"
+    env_file: .env
+
+  xrx-tts:
+    image: xrx-tts
+    build:
+      context: ./xrx-core/tts
+    ports:
+      - "8002:8002"
+    env_file: .env
+
+  xrx-redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  client:
+    build:
+      context: ./client
+      args:
+        NEXT_PUBLIC_UI: "workshop-facilitator"
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      - xrx-orchestrator
