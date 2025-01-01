@@ -1,4 +1,3 @@
-# app/agent/executor.py
 from typing import List, Dict, Any
 import json
 import os
@@ -10,8 +9,6 @@ from agent.graph.nodes import (
 )
 
 class WorkshopState:
-    """Manages the state of the workshop session."""
-    
     def __init__(self):
         self.current_section = 0
         self.sections = [
@@ -60,7 +57,7 @@ def load_workshop_content():
         return {}
 
 def get_section_content(section_name: str) -> dict:
-    """Get content for a specific workshop section."""
+    """Get the content for a specific workshop section."""
     content = load_workshop_content()
     return content.get(section_name, {})
 
@@ -76,7 +73,7 @@ def get_next_section() -> str:
         return next_section
     return "conclusion"
 
-async def single_turn_agent(messages: List[Dict[str, Any]]) -> Dict[str, Any]:
+async def single_turn_agent(messages: List[dict]) -> dict:
     """Process a single turn of the workshop conversation."""
     # Extract the latest user message
     user_message = messages[-1]["content"] if messages else ""
@@ -122,7 +119,7 @@ async def single_turn_agent(messages: List[Dict[str, Any]]) -> Dict[str, Any]:
     
     return out
 
-def create_widget_for_section(section: dict) -> Dict:
+def create_widget_for_section(section: dict) -> dict:
     """Create appropriate widget based on section content."""
     widget_type = section.get('widget_type')
     if not widget_type:
@@ -137,7 +134,7 @@ def create_widget_for_section(section: dict) -> Dict:
     
     return None
 
-def create_checklist_widget(section: dict) -> Dict:
+def create_checklist_widget(section: dict) -> dict:
     """Create a checklist widget for sections that need it."""
     return {
         'type': 'checklist',
@@ -148,7 +145,7 @@ def create_checklist_widget(section: dict) -> Dict:
         })
     }
 
-def create_flowchart_widget(section: dict) -> Dict:
+def create_flowchart_widget(section: dict) -> dict:
     """Create a flowchart widget for service user journey mapping."""
     return {
         'type': 'flowchart',
@@ -159,7 +156,7 @@ def create_flowchart_widget(section: dict) -> Dict:
         })
     }
 
-def create_data_table_widget(section: dict) -> Dict:
+def create_data_table_widget(section: dict) -> dict:
     """Create a data table widget for population data and statistics."""
     return {
         'type': 'data_table',
