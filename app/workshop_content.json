@@ -1,0 +1,172 @@
+{
+  "workshop_metadata": {
+    "title": "Cultural Competency Training for Forensic Mental Health Services",
+    "duration": "Full Day",
+    "target_audience": "Mental Health Professionals in Forensic Services",
+    "objectives": [
+      "Understand cultural competency in forensic mental health",
+      "Develop skills for culturally safe practice",
+      "Learn to address health inequalities",
+      "Improve service user engagement"
+    ]
+  },
+  "sections": {
+    "introduction": {
+      "title": "Introduction and Overview",
+      "duration": 900,
+      "content": "Welcome to our Cultural Competency Training Session for West London Forensic Services.",
+      "key_topics": [
+        "Cultural Competency in Forensic Mental Health",
+        "Health Inequalities in Forensic Populations",
+        "Intersectionality in Forensic Care",
+        "Cultural Safety in Secure Settings"
+      ],
+      "activities": [
+        {
+          "type": "discussion",
+          "duration": 180,
+          "topic": "Participant Introductions and Expectations"
+        }
+      ],
+      "has_visual_aid": false
+    },
+    "key_concepts": {
+      "title": "Key Concepts in Cultural Competency",
+      "duration": 1800,
+      "content": "Essential concepts and principles of cultural competency in forensic settings.",
+      "concepts": {
+        "cultural_competency": "The ability to understand, communicate with, and effectively interact with people across cultures in forensic settings",
+        "health_inequalities": "Systematic differences in health outcomes between different population groups in forensic care",
+        "intersectionality": "The interconnected nature of social categorizations such as race, class, and gender in forensic care contexts",
+        "cultural_safety": "An environment that is spiritually, socially, and emotionally safe for service users"
+      },
+      "has_visual_aid": true,
+      "widget_type": "checklist",
+      "checklist_items": [
+        "Understanding of diverse cultural backgrounds",
+        "Recognition of personal biases",
+        "Knowledge of cultural safety principles",
+        "Awareness of health inequalities",
+        "Cultural communication skills"
+      ]
+    },
+    "scenario_discussion": {
+      "title": "Case Scenario Analysis",
+      "duration": 1800,
+      "content": "A 28-year-old male service user of Somali origin has been admitted to medium-security after a violent offence.",
+      "discussion_points": [
+        "Cultural factors influencing presentation",
+        "Intersectionality impact",
+        "Cultural safety measures"
+      ],
+      "has_visual_aid": true,
+      "widget_type": "flowchart",
+      "flowchart_nodes": [
+        {
+          "id": "1",
+          "content": "Initial Assessment"
+        },
+        {
+          "id": "2",
+          "content": "Cultural Formulation"
+        },
+        {
+          "id": "3",
+          "content": "Treatment Planning"
+        },
+        {
+          "id": "4",
+          "content": "Engagement Strategies"
+        },
+        {
+          "id": "5",
+          "content": "Progress Review"
+        }
+      ],
+      "flowchart_edges": [
+        {"from": "1", "to": "2"},
+        {"from": "2", "to": "3"},
+        {"from": "3", "to": "4"},
+        {"from": "4", "to": "5"},
+        {"from": "5", "to": "3"}
+      ]
+    },
+    "population_data": {
+      "title": "Service User Population Demographics",
+      "duration": 1800,
+      "content": "Analysis of demographic patterns and service use.",
+      "has_visual_aid": true,
+      "widget_type": "data_table",
+      "table_headers": [
+        "Ethnic Group",
+        "Medium Secure",
+        "Low Secure",
+        "Local Borough"
+      ],
+      "table_data": [
+        ["White British", "45%", "48%", "55%"],
+        ["Black Caribbean", "15%", "14%", "8%"],
+        ["Black African", "12%", "11%", "6%"],
+        ["Asian", "10%", "9%", "15%"],
+        ["Other", "18%", "18%", "16%"]
+      ]
+    },
+    "health_inequalities": {
+      "title": "Health Inequalities in Forensic Care",
+      "duration": 1800,
+      "content": "Understanding and addressing health inequalities.",
+      "key_areas": [
+        "Access to services",
+        "Treatment outcomes",
+        "Length of stay",
+        "Recovery rates"
+      ],
+      "has_visual_aid": true,
+      "widget_type": "chart",
+      "chart_data": [
+        {"name": "Access", "value": 75},
+        {"name": "Outcomes", "value": 82},
+        {"name": "Stay", "value": 68},
+        {"name": "Recovery", "value": 79}
+      ]
+    },
+    "cultural_safety": {
+      "title": "Cultural Safety in Practice",
+      "duration": 1800,
+      "content": "Implementing cultural safety principles.",
+      "checklist_items": [
+        "Physical environment assessment",
+        "Staff cultural awareness",
+        "Communication practices",
+        "Service user feedback"
+      ],
+      "has_visual_aid": true,
+      "widget_type": "checklist"
+    },
+    "action_planning": {
+      "title": "Action Planning",
+      "duration": 1800,
+      "content": "Developing concrete plans for improvement.",
+      "areas": [
+        "Personal development",
+        "Team practices",
+        "Service improvements",
+        "Policy updates"
+      ],
+      "has_visual_aid": true,
+      "widget_type": "flowchart"
+    }
+  },
+  "resources": {
+    "handouts": [
+      "Cultural Competency Framework",
+      "Assessment Tools Guide",
+      "Community Resources Directory"
+    ],
+    "references": [
+      "Cultural Competency in Forensic Mental Health (2024)",
+      "Health Inequalities in Secure Services (2023)",
+      "Cultural Safety Practice Guide (2024)"
+    ]
+  }
+}
