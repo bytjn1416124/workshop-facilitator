@@ -2,20 +2,46 @@ version: '3.8'
 
 services:
   xrx-orchestrator:
-    image: xrx-orchestrator
     build: 
       context: ./xrx-core/orchestrator
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      - NODE_ENV=production
     env_file: .env
     depends_on:
       - xrx-redis
       - xrx-reasoning
       - xrx-stt
       - xrx-tts
+    networks:
+      - xrx-network
+
+  xrx-stt:
+    build:
+      context: ./xrx-core/stt
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    env_file: .env
+    networks:
+      - xrx-network
+
+  xrx-tts:
+    build:
+      context: ./xrx-core/tts
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    env_file: .env
+    networks:
+      - xrx-network
 
   xrx-reasoning:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8003:8003"
     env_file: .env
@@ -23,35 +49,35 @@ services:
       - ./app:/app
     depends_on:
       - xrx-redis
-
-  xrx-stt:
-    image: xrx-stt
-    build:
-      context: ./xrx-core/stt
-    ports:
-      - "8001:8001"
-    env_file: .env
-
-  xrx-tts:
-    image: xrx-tts
-    build:
-      context: ./xrx-core/tts
-    ports:
-      - "8002:8002"
-    env_file: .env
+    networks:
+      - xrx-network
 
   xrx-redis:
     image: redis:alpine
     ports:
       - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - xrx-network
 
   client:
     build:
       context: ./client
+      dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_UI: "workshop-facilitator"
+        - NEXT_PUBLIC_UI=workshop-facilitator
     ports:
       - "3000:3000"
     env_file: .env
     depends_on:
       - xrx-orchestrator
+    networks:
+      - xrx-network
+
+volumes:
+  redis-data:
+
+networks:
+  xrx-network:
+    driver: bridge
