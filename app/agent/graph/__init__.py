@@ -1,3 +1,3 @@
-from .nodes.customer_response import CustomerResponse
-from .nodes.widget import Widget
-from .nodes.task_description import TaskDescription
+from .nodes import CustomerResponse, Widget, TaskDescriptionResponse
+
+__all__ = ['CustomerResponse', 'Widget', 'TaskDescriptionResponse']
