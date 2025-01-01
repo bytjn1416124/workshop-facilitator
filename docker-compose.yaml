@@ -1,0 +1,6 @@
+version: '3.8'
+
+services:
+  xrx-orchestrator:
+    image: xrx-orchestrator
+[Rest of docker-compose.yaml content...]
