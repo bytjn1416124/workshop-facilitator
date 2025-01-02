@@ -1,10 +1,7 @@
-version: '3.8'
-
 services:
   xrx-orchestrator:
     build: 
       context: ./xrx-core/orchestrator
-      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     environment:
@@ -12,16 +9,12 @@ services:
     env_file: .env
     depends_on:
       - xrx-redis
-      - xrx-reasoning
-      - xrx-stt
-      - xrx-tts
     networks:
       - xrx-network
 
   xrx-stt:
     build:
       context: ./xrx-core/stt
-      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     env_file: .env
@@ -31,7 +24,6 @@ services:
   xrx-tts:
     build:
       context: ./xrx-core/tts
-      dockerfile: Dockerfile
     ports:
       - "8002:8002"
     env_file: .env
@@ -65,13 +57,16 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-      args:
-        - NEXT_PUBLIC_UI=workshop-facilitator
     ports:
       - "3000:3000"
+    environment:
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - NODE_ENV=production
     env_file: .env
     depends_on:
       - xrx-orchestrator
+      - xrx-reasoning
     networks:
       - xrx-network
 
