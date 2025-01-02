@@ -1,5 +1,5 @@
 from typing import Dict, List, Any
-from xrx_agent_framework import Node
+from ..base import Node
 
 class CustomerResponse(Node):
     """Node for generating workshop facilitator responses."""
