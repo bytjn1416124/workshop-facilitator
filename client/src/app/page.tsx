@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mic, MicOff, Loader } from 'lucide-react';
 import { WidgetSelector } from '@/components/ui/widgets/WidgetSelector';
+import type { ChecklistData, FlowchartData, DataTableData, ChartData } from '@/components/ui/widgets/WidgetSelector';
+
+type WidgetType = 'checklist' | 'flowchart' | 'data_table' | 'chart';
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -11,9 +14,16 @@ interface Message {
   timestamp: string;
 }
 
+type WidgetDataType = {
+  checklist: ChecklistData;
+  flowchart: FlowchartData;
+  data_table: DataTableData;
+  chart: ChartData;
+};
+
 interface Widget {
-  type: 'checklist' | 'flowchart' | 'data_table' | 'chart';
-  data: any;
+  type: WidgetType;
+  data: WidgetDataType[WidgetType];
 }
 
 export default function WorkshopPage() {
@@ -25,6 +35,7 @@ export default function WorkshopPage() {
   const wsRef = useRef<WebSocket | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const audioChunksRef = useRef<BlobPart[]>([]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -61,7 +72,7 @@ export default function WorkshopPage() {
             timestamp: new Date().toISOString()
           }]);
         } else if (data.type === 'widget') {
-          setWidgets(prev => [...prev, data.content]);
+          setWidgets(prev => [...prev, data.content as Widget]);
         }
       };
       
@@ -83,36 +94,22 @@ export default function WorkshopPage() {
     }
   };
 
-  const toggleRecording = async () => {
-    if (isRecording) {
-      await stopRecording();
-    } else {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        startRecording(stream);
-      } catch (err) {
-        console.error('Error accessing microphone:', err);
-        setError('Unable to access microphone. Please check permissions.');
-      }
-    }
-  };
-
-  const startRecording = (stream: MediaStream) => {
+  const startRecording = async () => {
     try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
-      const audioChunks: BlobPart[] = [];
-      
       mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
 
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          audioChunks.push(event.data);
+          audioChunksRef.current.push(event.data);
         }
       };
 
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        sendAudioData(audioBlob);
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+        await sendAudioData(audioBlob);
       };
 
       mediaRecorder.start(1000);
@@ -146,6 +143,14 @@ export default function WorkshopPage() {
     }
   };
 
+  const toggleRecording = async () => {
+    if (isRecording) {
+      await stopRecording();
+    } else {
+      await startRecording();
+    }
+  };
+
   const sendAudioData = async (audioBlob: Blob) => {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
       setError('Connection lost. Please refresh the page.');
@@ -175,7 +180,7 @@ export default function WorkshopPage() {
           </div>
         )}
 
-        <Card className="mb-8">
+        <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-2xl font-bold">
