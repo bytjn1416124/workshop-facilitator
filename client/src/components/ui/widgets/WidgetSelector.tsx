@@ -1,16 +1,40 @@
+import React from 'react';
 import { ChecklistWidget } from './ChecklistWidget';
 import { FlowchartWidget } from './FlowchartWidget';
 import { DataTableWidget } from './DataTableWidget';
 import { ChartWidget } from './ChartWidget';
 
-interface WidgetData {
-  type: string;
-  data: any;
+export interface ChecklistData {
+  items: Array<{ id: string; text: string; checked?: boolean }>;
+  title?: string;
 }
 
+export interface FlowchartData {
+  nodes: Array<{ id: string; content: string }>;
+  title?: string;
+}
+
+export interface DataTableData {
+  headers: string[];
+  rows: string[][];
+  title?: string;
+}
+
+export interface ChartData {
+  chartData: Array<{ name: string; value: number }>;
+  title?: string;
+}
+
+type WidgetData = {
+  checklist: ChecklistData;
+  flowchart: FlowchartData;
+  data_table: DataTableData;
+  chart: ChartData;
+};
+
 interface WidgetSelectorProps {
-  type: 'checklist' | 'flowchart' | 'data_table' | 'chart';
-  data: WidgetData;
+  type: keyof WidgetData;
+  data: WidgetData[keyof WidgetData];
 }
 
 export const WidgetSelector: React.FC<WidgetSelectorProps> = ({ type, data }) => {
@@ -19,7 +43,7 @@ export const WidgetSelector: React.FC<WidgetSelectorProps> = ({ type, data }) =>
     flowchart: FlowchartWidget,
     data_table: DataTableWidget,
     chart: ChartWidget
-  };
+  } as const;
 
   const Widget = widgets[type];
   
@@ -29,7 +53,8 @@ export const WidgetSelector: React.FC<WidgetSelectorProps> = ({ type, data }) =>
   }
 
   try {
-    return <Widget data={data} />;
+    // Type assertion to handle the widget-specific data type
+    return <Widget data={data as any} />;
   } catch (error) {
     console.error(`Error rendering widget: ${error}`);
     return (
