@@ -1,7 +1,5 @@
-# Use Node.js LTS version
-FROM node:20-alpine
+FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
 # Copy package files
@@ -10,14 +8,24 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy source files
 COPY . .
 
 # Build the application
 RUN npm run build
 
-# Start the application
-CMD ["npm", "start"]
+# Production image
+FROM node:20-alpine
 
-# Expose port
+WORKDIR /app
+
+# Copy built assets from builder
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
 EXPOSE 3000
+ENV PORT 3000
+ENV HOSTNAME 0.0.0.0
+
+CMD ["node", "server.js"]
