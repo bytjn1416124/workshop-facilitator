@@ -1,9 +1,6 @@
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../card';
-
-interface ChartData {
-  chartData: Array<{ name: string; value: number }>;
-  title?: string;
-}
+import type { ChartData } from './WidgetSelector';
 
 interface ChartWidgetProps {
   data: ChartData;

@@ -1,15 +1,6 @@
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../card';
-
-interface ChecklistItem {
-  id: string;
-  text: string;
-  checked?: boolean;
-}
-
-interface ChecklistData {
-  items: ChecklistItem[];
-  title?: string;
-}
+import type { ChecklistData } from './WidgetSelector';
 
 interface ChecklistWidgetProps {
   data: ChecklistData;

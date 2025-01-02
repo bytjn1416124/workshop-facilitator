@@ -1,14 +1,6 @@
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../card';
-
-interface FlowchartNode {
-  id: string;
-  content: string;
-}
-
-interface FlowchartData {
-  nodes: FlowchartNode[];
-  title?: string;
-}
+import type { FlowchartData } from './WidgetSelector';
 
 interface FlowchartWidgetProps {
   data: FlowchartData;

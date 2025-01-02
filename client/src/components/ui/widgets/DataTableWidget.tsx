@@ -1,10 +1,6 @@
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../card';
-
-interface DataTableData {
-  headers: string[];
-  rows: string[][];
-  title?: string;
-}
+import type { DataTableData } from './WidgetSelector';
 
 interface DataTableWidgetProps {
   data: DataTableData;
